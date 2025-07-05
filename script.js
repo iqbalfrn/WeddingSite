@@ -3,20 +3,91 @@ let wishesData = [];
 
 // ===== INITIALIZATION =====
 document.addEventListener("DOMContentLoaded", function() {
+    // Start background music immediately when page loads (during loading screen)
+    setupBackgroundMusic();
+    
     // Hide loading screen after delay
     setTimeout(() => {
         document.getElementById('loadingScreen').classList.add('hidden');
     }, 2500);
     
-    // Initialize all functionalities
+    // Initialize other functionalities
     setupCountdown();
     setupScrollAnimations();
-    setupBackgroundMusic();
     setupNavigationMenu();
     setupWishForm();
     loadSampleWishes();
     loadWishes();
 });
+
+// ===== BACKGROUND MUSIC =====
+function setupBackgroundMusic() {
+    const music = document.getElementById('backgroundMusic');
+    if (!music) return;
+
+    // Set volume to a comfortable level
+    music.volume = 0.7;
+
+    // Auto-play music immediately when page loads (during loading screen)
+    const attemptAutoPlay = () => {
+        music.play().then(() => {
+            console.log('Background music started during loading screen');
+        }).catch(error => {
+            console.log('Auto-play failed (browser policy):', error);
+            // Try again on first user interaction
+            document.addEventListener('click', () => {
+                music.play().catch(e => console.log('Manual play failed:', e));
+            }, { once: true });
+            
+            // Also try on any touch event for mobile
+            document.addEventListener('touchstart', () => {
+                music.play().catch(e => console.log('Touch play failed:', e));
+            }, { once: true });
+        });
+    };
+
+    // Try to auto-play immediately (during loading screen)
+    attemptAutoPlay();
+
+    // Also try auto-play after a very short delay for better browser compatibility
+    setTimeout(attemptAutoPlay, 100);
+    
+    // Another attempt after 500ms
+    setTimeout(attemptAutoPlay, 500);
+
+    // Handle page visibility change to pause/resume music
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            if (!music.paused) {
+                music.pause();
+            }
+        } else {
+            // Resume music when page becomes visible again
+            if (music.paused) {
+                music.play().catch(error => {
+                    console.log('Resume play failed:', error);
+                });
+            }
+        }
+    });
+
+    // Ensure music loops continuously
+    music.addEventListener('ended', () => {
+        music.currentTime = 0;
+        music.play().catch(error => {
+            console.log('Loop play failed:', error);
+        });
+    });
+
+    // Add fade-in effect for smooth audio start
+    music.addEventListener('play', () => {
+        music.style.transition = 'volume 1s ease-in';
+        music.volume = 0;
+        setTimeout(() => {
+            music.volume = 0.7;
+        }, 100);
+    });
+}
 
 // ===== COUNTDOWN TIMER =====
 function setupCountdown() {
@@ -83,55 +154,6 @@ function setupScrollAnimations() {
 
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
         observer.observe(el);
-    });
-}
-
-// ===== BACKGROUND MUSIC =====
-function setupBackgroundMusic() {
-    const music = document.getElementById('backgroundMusic');
-    if (!music) return;
-
-    // Auto-play music when page loads
-    const attemptAutoPlay = () => {
-        music.play().then(() => {
-            console.log('Background music started automatically');
-        }).catch(error => {
-            console.log('Auto-play failed (browser policy):', error);
-            // Try again on first user interaction
-            document.addEventListener('click', () => {
-                music.play().catch(e => console.log('Manual play failed:', e));
-            }, { once: true });
-        });
-    };
-
-    // Try to auto-play immediately
-    attemptAutoPlay();
-
-    // Also try auto-play after a short delay (for better browser compatibility)
-    setTimeout(attemptAutoPlay, 1000);
-
-    // Handle page visibility change to pause/resume music
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            if (!music.paused) {
-                music.pause();
-            }
-        } else {
-            // Resume music when page becomes visible again
-            if (music.paused) {
-                music.play().catch(error => {
-                    console.log('Resume play failed:', error);
-                });
-            }
-        }
-    });
-
-    // Ensure music loops continuously
-    music.addEventListener('ended', () => {
-        music.currentTime = 0;
-        music.play().catch(error => {
-            console.log('Loop play failed:', error);
-        });
     });
 }
 
