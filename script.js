@@ -1,14 +1,19 @@
 // ===== GLOBAL VARIABLES =====
 let wishesData = [];
+let musicStarted = false;
 
 // ===== INITIALIZATION =====
 document.addEventListener("DOMContentLoaded", function() {
-    // Start background music immediately when page loads (during loading screen)
-    setupBackgroundMusic();
+    // Force start background music immediately
+    forceStartBackgroundMusic();
     
     // Hide loading screen after delay
     setTimeout(() => {
         document.getElementById('loadingScreen').classList.add('hidden');
+        // Try to start music again after loading screen
+        if (!musicStarted) {
+            forceStartBackgroundMusic();
+        }
     }, 2500);
     
     // Initialize other functionalities
@@ -20,73 +25,156 @@ document.addEventListener("DOMContentLoaded", function() {
     loadWishes();
 });
 
-// ===== BACKGROUND MUSIC =====
-function setupBackgroundMusic() {
+// ===== FORCE BACKGROUND MUSIC AUTO-PLAY =====
+function forceStartBackgroundMusic() {
     const music = document.getElementById('backgroundMusic');
-    if (!music) return;
+    if (!music || musicStarted) return;
 
-    // Set volume to a comfortable level
-    music.volume = 0.7;
-
-    // Auto-play music immediately when page loads (during loading screen)
-    const attemptAutoPlay = () => {
-        music.play().then(() => {
-            console.log('Background music started during loading screen');
-        }).catch(error => {
-            console.log('Auto-play failed (browser policy):', error);
-            // Try again on first user interaction
-            document.addEventListener('click', () => {
-                music.play().catch(e => console.log('Manual play failed:', e));
-            }, { once: true });
+    // Set audio properties for better auto-play compatibility
+    music.volume = 0.6;
+    music.muted = false;
+    music.preload = 'auto';
+    
+    // Multiple aggressive attempts to start music
+    const startMusic = async () => {
+        try {
+            // Reset audio to beginning
+            music.currentTime = 0;
             
-            // Also try on any touch event for mobile
-            document.addEventListener('touchstart', () => {
-                music.play().catch(e => console.log('Touch play failed:', e));
-            }, { once: true });
-        });
+            // Attempt to play
+            const playPromise = music.play();
+            
+            if (playPromise !== undefined) {
+                await playPromise;
+                musicStarted = true;
+                console.log('🎵 Background music started successfully!');
+                
+                // Add fade-in effect
+                music.style.transition = 'volume 2s ease-in';
+                music.volume = 0;
+                setTimeout(() => {
+                    music.volume = 0.6;
+                }, 100);
+                
+                return true;
+            }
+        } catch (error) {
+            console.log('Auto-play attempt failed:', error);
+            return false;
+        }
     };
 
-    // Try to auto-play immediately (during loading screen)
-    attemptAutoPlay();
-
-    // Also try auto-play after a very short delay for better browser compatibility
-    setTimeout(attemptAutoPlay, 100);
+    // Immediate attempt
+    startMusic();
     
-    // Another attempt after 500ms
-    setTimeout(attemptAutoPlay, 500);
+    // Retry attempts with different timings
+    setTimeout(() => startMusic(), 50);
+    setTimeout(() => startMusic(), 100);
+    setTimeout(() => startMusic(), 250);
+    setTimeout(() => startMusic(), 500);
+    setTimeout(() => startMusic(), 1000);
+    setTimeout(() => startMusic(), 2000);
 
-    // Handle page visibility change to pause/resume music
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            if (!music.paused) {
-                music.pause();
+    // Create invisible interaction trigger
+    const createInvisibleTrigger = () => {
+        const trigger = document.createElement('div');
+        trigger.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99999;
+            background: transparent;
+            cursor: pointer;
+        `;
+        
+        const startMusicOnInteraction = async () => {
+            if (!musicStarted) {
+                const success = await startMusic();
+                if (success) {
+                    document.body.removeChild(trigger);
+                }
             }
-        } else {
-            // Resume music when page becomes visible again
-            if (music.paused) {
-                music.play().catch(error => {
-                    console.log('Resume play failed:', error);
-                });
+        };
+
+        // Multiple event listeners for maximum compatibility
+        trigger.addEventListener('click', startMusicOnInteraction, { once: true });
+        trigger.addEventListener('touchstart', startMusicOnInteraction, { once: true });
+        trigger.addEventListener('touchend', startMusicOnInteraction, { once: true });
+        trigger.addEventListener('mousedown', startMusicOnInteraction, { once: true });
+        trigger.addEventListener('mouseup', startMusicOnInteraction, { once: true });
+        trigger.addEventListener('mousemove', startMusicOnInteraction, { once: true });
+        
+        document.body.appendChild(trigger);
+        
+        // Auto-remove trigger after 5 seconds if music started
+        setTimeout(() => {
+            if (musicStarted && document.body.contains(trigger)) {
+                document.body.removeChild(trigger);
+            }
+        }, 5000);
+    };
+
+    // Create invisible trigger as fallback
+    setTimeout(createInvisibleTrigger, 100);
+
+    // Global event listeners for any user interaction
+    const globalEvents = ['click', 'touchstart', 'touchend', 'mousedown', 'mouseup', 'keydown', 'scroll'];
+    
+    globalEvents.forEach(eventType => {
+        document.addEventListener(eventType, async () => {
+            if (!musicStarted) {
+                await startMusic();
+            }
+        }, { once: true, passive: true });
+    });
+
+    // Window focus/blur handling
+    window.addEventListener('focus', async () => {
+        if (!musicStarted) {
+            await startMusic();
+        } else if (music.paused) {
+            try {
+                await music.play();
+            } catch (error) {
+                console.log('Resume on focus failed:', error);
             }
         }
     });
 
-    // Ensure music loops continuously
-    music.addEventListener('ended', () => {
-        music.currentTime = 0;
-        music.play().catch(error => {
-            console.log('Loop play failed:', error);
-        });
+    // Page visibility change handling
+    document.addEventListener('visibilitychange', async () => {
+        if (!document.hidden && !musicStarted) {
+            await startMusic();
+        } else if (!document.hidden && music.paused) {
+            try {
+                await music.play();
+            } catch (error) {
+                console.log('Resume on visibility change failed:', error);
+            }
+        }
     });
 
-    // Add fade-in effect for smooth audio start
-    music.addEventListener('play', () => {
-        music.style.transition = 'volume 1s ease-in';
-        music.volume = 0;
-        setTimeout(() => {
-            music.volume = 0.7;
-        }, 100);
+    // Ensure continuous looping
+    music.addEventListener('ended', async () => {
+        music.currentTime = 0;
+        try {
+            await music.play();
+        } catch (error) {
+            console.log('Loop restart failed:', error);
+        }
     });
+
+    // Handle audio loading
+    music.addEventListener('canplaythrough', async () => {
+        if (!musicStarted) {
+            await startMusic();
+        }
+    });
+
+    // Force load the audio
+    music.load();
 }
 
 // ===== COUNTDOWN TIMER =====
@@ -425,9 +513,8 @@ if ('IntersectionObserver' in window) {
 
 // Preload critical resources
 window.addEventListener('load', function() {
-    // Preload audio
-    const audio = document.getElementById('backgroundMusic');
-    if (audio) {
-        audio.load();
+    // Try to start music again on window load
+    if (!musicStarted) {
+        forceStartBackgroundMusic();
     }
 });

@@ -17,6 +17,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Background Music (Auto-play) -->
+    <audio id="backgroundMusic" loop autoplay preload="auto" style="display: none;">
+        <source src="audio/kamulahtakdirku.mp3" type="audio/mpeg">
+        <source src="audio/kamulahtakdirku.mp3" type="audio/wav">
+        <source src="audio/kamulahtakdirku.mp3" type="audio/mp3">
+    </audio>
+
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-content">
@@ -646,11 +653,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Background Music (Hidden) -->
-    <audio id="backgroundMusic" loop autoplay>
-        <source src="audio/kamulahtakdirku.mp3" type="audio/mpeg">
-    </audio>
 
     <!-- Gallery Modals -->
     <div id="modal1" class="modal">
