@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan | Ajeng & Balya</title>
+    <meta name="description" content="Undangan pernikahan digital Ajeng & Balya - 30 Agustus 2025">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prata:wght@400&family=Tiro+Javanese:ital,wght@0,400;1,400&family=Dancing+Script:wght@400;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="wayang-spinner">
+                <svg viewBox="0 0 100 100" class="spinner-ring">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="white" stroke-width="4" opacity="0.3"/>
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="white" stroke-width="4" stroke-dasharray="60 40" class="spinner-circle"/>
+                </svg>
+                <div class="spinner-ornament">
+                    <svg viewBox="0 0 40 40" class="ornament-svg">
+                        <path d="M20 5 Q30 15 20 25 Q10 15 20 5 Z"/>
+                        <path d="M20 25 Q30 35 20 45 Q10 35 20 25 Z" transform="rotate(180 20 25)"/>
+                        <circle cx="20" cy="20" r="4"/>
+                    </svg>
+                </div>
+            </div>
+            <h2 class="loading-title">Ajeng & Balya</h2>
+            <p class="loading-text">Sedang memuat undangan...</p>
+            <div class="loading-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <!-- Wayang Silhouettes -->
+        <div class="floating-wayang wayang-1">
+            <svg viewBox="0 0 100 120">
+                <path d="M50 10 L60 30 L50 50 L40 30 Z M45 50 L55 50 L60 70 L50 90 L40 70 Z M35 70 L65 70 L70 80 L60 100 L40 100 L30 80 Z" />
+                <circle cx="50" cy="25" r="8" />
+                <path d="M30 35 Q50 45 70 35" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+        </div>
+        
+        <div class="floating-wayang wayang-2">
+            <svg viewBox="0 0 100 120">
+                <path d="M50 15 L65 35 L50 55 L35 35 Z M40 55 L60 55 L65 75 L50 95 L35 75 Z" />
+                <circle cx="50" cy="30" r="6" />
+                <path d="M25 40 Q50 50 75 40" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+        </div>
+
+        <div class="floating-wayang wayang-3">
+            <svg viewBox="0 0 100 120">
+                <path d="M50 5 L70 25 L50 45 L30 25 Z M35 45 L65 45 L70 65 L50 85 L30 65 Z M25 65 L75 65 L80 75 L70 95 L30 95 L20 75 Z" />
+                <circle cx="50" cy="20" r="10" />
+            </svg>
+        </div>
+
+        <!-- Batik Patterns -->
+        <div class="floating-batik batik-1">
+            <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="4"/>
+                <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" stroke-width="2"/>
+                <circle cx="50" cy="50" r="10"/>
+                <path d="M50 10 L60 40 L50 50 L40 40 Z"/>
+                <path d="M90 50 L60 60 L50 50 L60 40 Z"/>
+                <path d="M50 90 L40 60 L50 50 L60 60 Z"/>
+                <path d="M10 50 L40 40 L50 50 L40 60 Z"/>
+            </svg>
+        </div>
+
+        <div class="floating-batik batik-2">
+            <svg viewBox="0 0 100 100">
+                <polygon points="50,5 85,25 85,75 50,95 15,75 15,25"/>
+                <circle cx="50" cy="50" r="15"/>
+                <circle cx="50" cy="30" r="5"/>
+                <circle cx="50" cy="70" r="5"/>
+                <circle cx="30" cy="50" r="5"/>
+                <circle cx="70" cy="50" r="5"/>
+            </svg>
+        </div>
+
+        <!-- Traditional Ornaments -->
+        <div class="floating-ornament ornament-1">
+            <svg viewBox="0 0 100 100">
+                <path d="M50 10 Q70 30 50 50 Q30 30 50 10 Z"/>
+                <path d="M50 50 Q70 70 50 90 Q30 70 50 50 Z"/>
+                <path d="M10 50 Q30 30 50 50 Q30 70 10 50 Z"/>
+                <path d="M90 50 Q70 30 50 50 Q70 70 90 50 Z"/>
+                <circle cx="50" cy="50" r="8"/>
+            </svg>
+        </div>
+
+        <!-- Rose Petals -->
+        <div class="rose-petals">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+        </div>
+
+        <!-- Sparkle Effects -->
+        <div class="sparkles">
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="nav-menu">
+        <button class="nav-menu-btn" id="navMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-menu-list" id="navMenuList">
+            <a href="#hero" class="nav-menu-item">Beranda</a>
+            <a href="#couple" class="nav-menu-item">Mempelai</a>
+            <a href="#event" class="nav-menu-item">Acara</a>
+            <a href="#gallery" class="nav-menu-item">Galeri</a>
+            <a href="#wishes" class="nav-menu-item">Ucapan</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <!-- Background Pattern -->
+        <div class="hero-pattern"></div>
+        
+        <!-- Decorative Columns -->
+        <div class="hero-column hero-column-left">
+            <svg viewBox="0 0 100 400" class="column-svg">
+                <rect x="20" y="0" width="60" height="400" fill="url(#columnGradient)" opacity="0.3"/>
+                <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                <circle cx="50" cy="150" r="20" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                <circle cx="50" cy="250" r="25" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                <circle cx="50" cy="350" r="20" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+            </svg>
+        </div>
+        
+        <div class="hero-column hero-column-right">
+            <svg viewBox="0 0 100 400" class="column-svg">
+                <rect x="20" y="0" width="60" height="400" fill="url(#columnGradient)" opacity="0.3"/>
+                <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                <circle cx="50" cy="150" r="20" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                <circle cx="50" cy="250" r="25" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                <circle cx="50" cy="350" r="20" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+            </svg>
+        </div>
+
+        <!-- Floral Decorations -->
+        <div class="hero-flowers hero-flowers-top-left">
+            <svg viewBox="0 0 120 120" class="flower-decoration">
+                <g opacity="0.7">
+                    <circle cx="60" cy="60" r="8" fill="currentColor"/>
+                    <ellipse cx="60" cy="40" rx="12" ry="20" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="80" cy="60" rx="20" ry="12" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="60" cy="80" rx="12" ry="20" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="40" cy="60" rx="20" ry="12" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="75" cy="45" rx="15" ry="10" fill="currentColor" opacity="0.6" transform="rotate(45 75 45)"/>
+                    <ellipse cx="75" cy="75" rx="15" ry="10" fill="currentColor" opacity="0.6" transform="rotate(-45 75 75)"/>
+                    <ellipse cx="45" cy="45" rx="15" ry="10" fill="currentColor" opacity="0.6" transform="rotate(-45 45 45)"/>
+                    <ellipse cx="45" cy="75" rx="15" ry="10" fill="currentColor" opacity="0.6" transform="rotate(45 45 75)"/>
+                </g>
+            </svg>
+        </div>
+
+        <div class="hero-flowers hero-flowers-top-right">
+            <svg viewBox="0 0 120 120" class="flower-decoration">
+                <g opacity="0.7">
+                    <circle cx="60" cy="60" r="8" fill="currentColor"/>
+                    <ellipse cx="60" cy="40" rx="12" ry="20" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="80" cy="60" rx="20" ry="12" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="60" cy="80" rx="12" ry="20" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="40" cy="60" rx="20" ry="12" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="75" cy="45" rx="15" ry="10" fill="currentColor" opacity="0.6" transform="rotate(45 75 45)"/>
+                    <ellipse cx="75" cy="75" rx="15" ry="10" fill="currentColor" opacity="0.6" transform="rotate(-45 75 75)"/>
+                    <ellipse cx="45" cy="45" rx="15" ry="10" fill="currentColor" opacity="0.6" transform="rotate(-45 45 45)"/>
+                    <ellipse cx="45" cy="75" rx="15" ry="10" fill="currentColor" opacity="0.6" transform="rotate(45 45 75)"/>
+                </g>
+            </svg>
+        </div>
+
+        <div class="hero-flowers hero-flowers-bottom-left">
+            <svg viewBox="0 0 100 100" class="flower-decoration">
+                <g opacity="0.6">
+                    <circle cx="50" cy="50" r="6" fill="currentColor"/>
+                    <ellipse cx="50" cy="35" rx="8" ry="15" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="65" cy="50" rx="15" ry="8" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="50" cy="65" rx="8" ry="15" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="35" cy="50" rx="15" ry="8" fill="currentColor" opacity="0.8"/>
+                </g>
+            </svg>
+        </div>
+
+        <div class="hero-flowers hero-flowers-bottom-right">
+            <svg viewBox="0 0 100 100" class="flower-decoration">
+                <g opacity="0.6">
+                    <circle cx="50" cy="50" r="6" fill="currentColor"/>
+                    <ellipse cx="50" cy="35" rx="8" ry="15" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="65" cy="50" rx="15" ry="8" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="50" cy="65" rx="8" ry="15" fill="currentColor" opacity="0.8"/>
+                    <ellipse cx="35" cy="50" rx="15" ry="8" fill="currentColor" opacity="0.8"/>
+                </g>
+            </svg>
+        </div>
+
+        <!-- Main Content -->
+        <div class="hero-content">
+            <!-- Wedding Invitation Text -->
+            <div class="hero-invitation-text">
+                <p class="invitation-line-1">Undangan Pernikahan</p>
+            </div>
+
+            <!-- Logo Image -->
+            <div class="hero-logo">
+                <img 
+                    src="image/logoAB.png" 
+                    alt="Logo BA" 
+                    class="logo-image"
+                />
+            </div>
+
+            <!-- Wedding Invitation Label -->
+            <div class="hero-label">
+                <p class="wedding-label">WEDDING INVITATION</p>
+            </div>
+
+            <!-- Names -->
+            <div class="hero-names">
+                <h1 class="couple-names">Balya & Ajeng</h1>
+            </div>
+
+            <!-- Open Invitation Button -->
+            <div class="hero-button">
+                <button onclick="scrollToSection('couple')" class="open-invitation-btn">
+                    <i class="fas fa-envelope-open"></i>
+                    Open Invitation
+                </button>
+            </div>
+        </div>
+
+        <!-- SVG Definitions -->
+        <svg width="0" height="0">
+            <defs>
+                <linearGradient id="columnGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.8"/>
+                    <stop offset="50%" stop-color="#C75B7A" stop-opacity="0.6"/>
+                    <stop offset="100%" stop-color="#8B1538" stop-opacity="0.4"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Couple Section -->
+        <section id="couple" class="couple section">
+            <div class="container">
+                <p class="section-greeting reveal">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+                <h2 class="section-title reveal">Sang Mempelai</h2>
+                
+                <div class="couple-grid">
+                    <!-- Bride -->
+                    <div class="couple-person reveal-left">
+                        <div class="couple-card">
+                            <div class="decorative-corner corner-left">
+                                <svg viewBox="0 0 100 100">
+                                    <path d="M0 0 L50 0 Q0 0 0 50 Z"/>
+                                    <circle cx="25" cy="25" r="8"/>
+                                </svg>
+                            </div>
+                            
+                            <div class="couple-image-frame">
+                                <div class="animated-border"></div>
+                                <img src="https://images.unsplash.com/photo-1594744806547-9b5ba63b7358?w=400&h=400&fit=crop&crop=face" alt="Ajeng Nur Aini">
+                            </div>
+                            
+                            <h3 class="couple-name">Ajeng Nur Aini</h3>
+                            <p class="couple-parent">
+                                Putri dari<br>
+                                <span class="parent-name">Bpk. Solihin</span><br>
+                                &<br>
+                                <span class="parent-name">Ibu Emi Setyowati</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Ampersand -->
+                    <div class="couple-separator reveal">
+                        <div class="ampersand-container">
+                            <div class="ampersand">&</div>
+                            <div class="decorative-element element-1">
+                                <svg viewBox="0 0 100 100">
+                                    <path d="M50 10 Q70 30 50 50 Q30 30 50 10 Z"/>
+                                    <path d="M50 50 Q70 70 50 90 Q30 70 50 50 Z"/>
+                                </svg>
+                            </div>
+                            <div class="decorative-element element-2">
+                                <svg viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="30"/>
+                                    <circle cx="50" cy="50" r="15" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Groom -->
+                    <div class="couple-person reveal-right">
+                        <div class="couple-card">
+                            <div class="decorative-corner corner-right">
+                                <svg viewBox="0 0 100 100">
+                                    <path d="M0 0 L50 0 Q0 0 0 50 Z"/>
+                                    <circle cx="25" cy="25" r="8"/>
+                                </svg>
+                            </div>
+                            
+                            <div class="couple-image-frame">
+                                <div class="animated-border reverse"></div>
+                                <img src="https://images.unsplash.com/photo-1616081423124-08a67a0735f6?w=400&h=400&fit=crop&crop=face" alt="Balya Gustopa">
+                            </div>
+                            
+                            <h3 class="couple-name">Balya Gustopa</h3>
+                            <p class="couple-parent">
+                                Putra dari<br>
+                                <span class="parent-name">Bpk. Nasehat</span><br>
+                                &<br>
+                                <span class="parent-name">Ibu Desak Ketut Tami</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Section -->
+        <section id="event" class="event section">
+            <div class="container">
+                <h2 class="section-title reveal">Perhitungan Hari</h2>
+                
+                <!-- Countdown -->
+                <div id="countdown" class="countdown reveal">
+                    <div class="countdown-block">
+                        <span id="days">00</span>
+                        <p>Hari</p>
+                    </div>
+                    <div class="countdown-block">
+                        <span id="hours">00</span>
+                        <p>Jam</p>
+                    </div>
+                    <div class="countdown-block">
+                        <span id="minutes">00</span>
+                        <p>Menit</p>
+                    </div>
+                    <div class="countdown-block">
+                        <span id="seconds">00</span>
+                        <p>Detik</p>
+                    </div>
+                </div>
+
+                <!-- Event Cards -->
+                <div class="event-cards">
+                    <!-- Akad Nikah -->
+                    <div class="event-card reveal-left">
+                        <div class="event-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 7V9L13 9V7C13 5.9 13.9 5 15 5L21 5C22.1 5 23 5.9 23 7V9H21ZM21 16C22.1 16 23 16.9 23 18S22.1 20 21 20 19 19.1 19 18 19.9 16 21 16ZM21 11C22.1 11 23 11.9 23 13S22.1 15 21 15 19 14.1 19 13 19.9 11 21 11ZM3 16C4.1 16 5 16.9 5 18S4.1 20 3 20 1 19.1 1 18 1.9 16 3 16ZM3 11C4.1 11 5 11.9 5 13S4.1 15 3 15 1 14.1 1 13 1.9 11 3 11Z"/>
+                            </svg>
+                        </div>
+                        
+                        <h3>Akad Nikah</h3>
+                        
+                        <div class="event-details">
+                            <div class="event-detail">
+                                <i class="fas fa-calendar"></i>
+                                <span>Sabtu, 30 Agustus 2025</span>
+                            </div>
+                            <div class="event-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>07.00 WIB - Selesai</span>
+                            </div>
+                            <div class="event-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <p class="venue-name">Cafe Terang Ing Penggalih</p>
+                                    <p class="venue-address">Jl. Sumber Tugu Krajan Sumbersekar Kec. Dau Kabupaten Malang Jawa Timur</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="https://maps.google.com/maps?q=Cafe+Terang+Ing+Penggalih+Malang" target="_blank" class="btn-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Lihat Lokasi
+                        </a>
+                    </div>
+
+                    <!-- Resepsi -->
+                    <div class="event-card reveal-right">
+                        <div class="event-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M5,4A1,1 0 0,0 4,5V8A1,1 0 0,0 5,9H7A1,1 0 0,0 8,8V5A1,1 0 0,0 7,4H5M5,10A1,1 0 0,0 4,11V14A1,1 0 0,0 5,15H7A1,1 0 0,0 8,14V11A1,1 0 0,0 7,10H5M5,16A1,1 0 0,0 4,17V20A1,1 0 0,0 5,21H7A1,1 0 0,0 8,20V17A1,1 0 0,0 7,16H5M9,4V8H21V4H9M9,10V14H21V10H9M9,16V20H21V16H9Z"/>
+                            </svg>
+                        </div>
+                        
+                        <h3>Resepsi Pernikahan</h3>
+                        
+                        <div class="event-details">
+                            <div class="event-detail">
+                                <i class="fas fa-calendar"></i>
+                                <span>Sabtu, 30 Agustus 2025</span>
+                            </div>
+                            <div class="event-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>11.00 - 13.00 WIB</span>
+                            </div>
+                            <div class="event-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <p class="venue-name">Cafe Terang Ing Penggalih</p>
+                                    <p class="venue-address">Jl. Sumber Tugu Krajan Sumbersekar Kec. Dau Kabupaten Malang Jawa Timur</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="https://maps.google.com/maps?q=Cafe+Terang+Ing+Penggalih+Malang" target="_blank" class="btn-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Lihat Lokasi
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="gallery section">
+            <div class="container">
+                <h2 class="section-title reveal">Galeri Momen</h2>
+                
+                <div class="gallery-grid">
+                    <div class="gallery-item reveal" onclick="openModal('modal1')">
+                        <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=400&h=400&fit=crop" alt="Momen Bahagia">
+                        <div class="gallery-overlay">
+                            <p>Momen Bahagia</p>
+                            <div class="gallery-corner">
+                                <svg viewBox="0 0 100 100">
+                                    <path d="M50 10 Q70 30 50 50 Q30 30 50 10 Z"/>
+                                    <circle cx="50" cy="35" r="5"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item reveal" onclick="openModal('modal2')">
+                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=400&h=400&fit=crop" alt="Cinta Sejati">
+                        <div class="gallery-overlay">
+                            <p>Cinta Sejati</p>
+                            <div class="gallery-corner">
+                                <svg viewBox="0 0 100 100">
+                                    <path d="M50 10 Q70 30 50 50 Q30 30 50 10 Z"/>
+                                    <circle cx="50" cy="35" r="5"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item reveal" onclick="openModal('modal3')">
+                        <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=400&h=400&fit=crop" alt="Kebersamaan">
+                        <div class="gallery-overlay">
+                            <p>Kebersamaan</p>
+                            <div class="gallery-corner">
+                                <svg viewBox="0 0 100 100">
+                                    <path d="M50 10 Q70 30 50 50 Q30 30 50 10 Z"/>
+                                    <circle cx="50" cy="35" r="5"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item reveal" onclick="openModal('modal4')">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop" alt="Janji Suci">
+                        <div class="gallery-overlay">
+                            <p>Janji Suci</p>
+                            <div class="gallery-corner">
+                                <svg viewBox="0 0 100 100">
+                                    <path d="M50 10 Q70 30 50 50 Q30 30 50 10 Z"/>
+                                    <circle cx="50" cy="35" r="5"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item reveal" onclick="openModal('modal5')">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop" alt="Tawa Bahagia">
+                        <div class="gallery-overlay">
+                            <p>Tawa Bahagia</p>
+                            <div class="gallery-corner">
+                                <svg viewBox="0 0 100 100">
+                                    <path d="M50 10 Q70 30 50 50 Q30 30 50 10 Z"/>
+                                    <circle cx="50" cy="35" r="5"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item reveal" onclick="openModal('modal6')">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=400&fit=crop" alt="Cinta Abadi">
+                        <div class="gallery-overlay">
+                            <p>Cinta Abadi</p>
+                            <div class="gallery-corner">
+                                <svg viewBox="0 0 100 100">
+                                    <path d="M50 10 Q70 30 50 50 Q30 30 50 10 Z"/>
+                                    <circle cx="50" cy="35" r="5"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wishes Section -->
+        <section id="wishes" class="wishes section">
+            <div class="container">
+                <h2 class="section-title reveal">Ucapan & Doa</h2>
+                
+                <!-- Wish Form -->
+                <div class="wishes-form reveal">
+                    <div class="form-card">
+                        <div class="form-header">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        
+                        <form id="wishForm">
+                            <div class="form-group">
+                                <label for="wishName">Nama Lengkap</label>
+                                <input type="text" id="wishName" name="wishName" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="wishMessage">Ucapan & Doa</label>
+                                <textarea id="wishMessage" name="wishMessage" rows="4" required placeholder="Tuliskan ucapan dan doa terbaik untuk kedua mempelai..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="wishAttendance">Konfirmasi Kehadiran</label>
+                                <select id="wishAttendance" name="wishAttendance" required>
+                                    <option value="">Pilih Kehadiran</option>
+                                    <option value="hadir">Hadir</option>
+                                    <option value="tidak-hadir">Tidak Hadir</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="btn-submit">
+                                <i class="fas fa-paper-plane"></i>
+                                Kirim Ucapan
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Wishes List -->
+                <div class="wishes-list reveal">
+                    <h3>Ucapan dari Tamu</h3>
+                    <div id="wishesContainer">
+                        <!-- Sample wishes will be added here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Closing Section -->
+        <section class="closing section">
+            <div class="container">
+                <div class="closing-content reveal">
+                    <p class="closing-text">
+                        Atas kehadiran dan doa restunya kami ucapkan terima kasih
+                    </p>
+                    
+                    <h2 class="closing-title">Matur Nuwun</h2>
+                    
+                    <p class="closing-family">Kami yang berbahagia</p>
+                    <p class="closing-names">Kel. Bapak Solihin dan Ibu Emi Setyowati</p>
+                    <p class="closing-names">Kel. Bapak Nasehat dan Ibu Desak Ketut Tami</p>
+                    
+                    <p class="closing-greeting">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Kontak Mempelai</h3>
+                    <p>Ajeng: <a href="tel:+6281234567890">+62 812-3456-7890</a></p>
+                    <p>Balya: <a href="tel:+6281234567891">+62 812-3456-7891</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Lokasi Acara</h3>
+                    <p>Cafe Terang Ing Penggalih</p>
+                    <p>Sumbersekar, Dau, Malang</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Ikuti Kami</h3>
+                    <div class="footer-social">
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>© 2025 Ajeng & Balya Wedding. Dibuat dengan ❤️ untuk kebahagiaan abadi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Audio Player -->
+    <div class="audio-player">
+        <audio id="backgroundMusic" loop>
+            <source src="audio/kamulahtakdirku.mp3" type="audio/wav">
+        </audio>
+        <button id="playPauseBtn" class="audio-btn">
+            <i class="fas fa-play"></i>
+        </button>
+    </div>
+
+    <!-- Gallery Modals -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal1')">&times;</span>
+            <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=800&h=600&fit=crop" alt="Momen Bahagia">
+            <h3>Momen Bahagia</h3>
+        </div>
+    </div>
+    
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal2')">&times;</span>
+            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&h=600&fit=crop" alt="Cinta Sejati">
+            <h3>Cinta Sejati</h3>
+        </div>
+    </div>
+    
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal3')">&times;</span>
+            <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=800&h=600&fit=crop" alt="Kebersamaan">
+            <h3>Kebersamaan</h3>
+        </div>
+    </div>
+    
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal4')">&times;</span>
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop" alt="Janji Suci">
+            <h3>Janji Suci</h3>
+        </div>
+    </div>
+    
+    <div id="modal5" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal5')">&times;</span>
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop" alt="Tawa Bahagia">
+            <h3>Tawa Bahagia</h3>
+        </div>
+    </div>
+    
+    <div id="modal6" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('modal6')">&times;</span>
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&h=600&fit=crop" alt="Cinta Abadi">
+            <h3>Cinta Abadi</h3>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
