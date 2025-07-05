@@ -93,6 +93,29 @@ function setupAudioPlayer() {
     
     if (!music || !playBtn) return;
 
+    // Set initial button state to pause since music will auto-play
+    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    playBtn.classList.add('playing');
+
+    // Auto-play music when page loads
+    const attemptAutoPlay = () => {
+        music.play().then(() => {
+            console.log('Auto-play started successfully');
+        }).catch(error => {
+            console.log('Auto-play failed, user interaction required:', error);
+            // If auto-play fails, reset button to play state
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            playBtn.classList.remove('playing');
+        });
+    };
+
+    // Try to auto-play immediately
+    attemptAutoPlay();
+
+    // Also try auto-play after a short delay (for better browser compatibility)
+    setTimeout(attemptAutoPlay, 1000);
+
+    // Handle user interaction with play/pause button
     playBtn.addEventListener('click', function() {
         if (music.paused) {
             music.play().then(() => {
@@ -108,6 +131,7 @@ function setupAudioPlayer() {
         }
     });
 
+    // Handle audio events
     music.addEventListener('ended', () => {
         playBtn.innerHTML = '<i class="fas fa-play"></i>';
         playBtn.classList.remove('playing');
@@ -121,6 +145,22 @@ function setupAudioPlayer() {
     music.addEventListener('play', () => {
         playBtn.innerHTML = '<i class="fas fa-pause"></i>';
         playBtn.classList.add('playing');
+    });
+
+    // Handle page visibility change to pause/resume music
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            if (!music.paused) {
+                music.pause();
+            }
+        } else {
+            // Resume music when page becomes visible again
+            if (music.paused && playBtn.classList.contains('playing')) {
+                music.play().catch(error => {
+                    console.log('Resume play failed:', error);
+                });
+            }
+        }
     });
 }
 
