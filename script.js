@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize all functionalities
     setupCountdown();
     setupScrollAnimations();
-    setupAudioPlayer();
+    setupBackgroundMusic();
     setupNavigationMenu();
     setupWishForm();
     loadSampleWishes();
@@ -86,26 +86,21 @@ function setupScrollAnimations() {
     });
 }
 
-// ===== AUDIO PLAYER =====
-function setupAudioPlayer() {
+// ===== BACKGROUND MUSIC =====
+function setupBackgroundMusic() {
     const music = document.getElementById('backgroundMusic');
-    const playBtn = document.getElementById('playPauseBtn');
-    
-    if (!music || !playBtn) return;
-
-    // Set initial button state to pause since music will auto-play
-    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-    playBtn.classList.add('playing');
+    if (!music) return;
 
     // Auto-play music when page loads
     const attemptAutoPlay = () => {
         music.play().then(() => {
-            console.log('Auto-play started successfully');
+            console.log('Background music started automatically');
         }).catch(error => {
-            console.log('Auto-play failed, user interaction required:', error);
-            // If auto-play fails, reset button to play state
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            playBtn.classList.remove('playing');
+            console.log('Auto-play failed (browser policy):', error);
+            // Try again on first user interaction
+            document.addEventListener('click', () => {
+                music.play().catch(e => console.log('Manual play failed:', e));
+            }, { once: true });
         });
     };
 
@@ -115,38 +110,6 @@ function setupAudioPlayer() {
     // Also try auto-play after a short delay (for better browser compatibility)
     setTimeout(attemptAutoPlay, 1000);
 
-    // Handle user interaction with play/pause button
-    playBtn.addEventListener('click', function() {
-        if (music.paused) {
-            music.play().then(() => {
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                playBtn.classList.add('playing');
-            }).catch(error => {
-                console.log('Audio play failed:', error);
-            });
-        } else {
-            music.pause();
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            playBtn.classList.remove('playing');
-        }
-    });
-
-    // Handle audio events
-    music.addEventListener('ended', () => {
-        playBtn.innerHTML = '<i class="fas fa-play"></i>';
-        playBtn.classList.remove('playing');
-    });
-
-    music.addEventListener('pause', () => {
-        playBtn.innerHTML = '<i class="fas fa-play"></i>';
-        playBtn.classList.remove('playing');
-    });
-
-    music.addEventListener('play', () => {
-        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-        playBtn.classList.add('playing');
-    });
-
     // Handle page visibility change to pause/resume music
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
@@ -155,12 +118,20 @@ function setupAudioPlayer() {
             }
         } else {
             // Resume music when page becomes visible again
-            if (music.paused && playBtn.classList.contains('playing')) {
+            if (music.paused) {
                 music.play().catch(error => {
                     console.log('Resume play failed:', error);
                 });
             }
         }
+    });
+
+    // Ensure music loops continuously
+    music.addEventListener('ended', () => {
+        music.currentTime = 0;
+        music.play().catch(error => {
+            console.log('Loop play failed:', error);
+        });
     });
 }
 

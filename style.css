@@ -1353,40 +1353,6 @@ body {
     font-size: 0.875rem;
 }
 
-/* ===== AUDIO PLAYER ===== */
-.audio-player {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 1000;
-}
-
-.audio-btn {
-    width: 56px;
-    height: 56px;
-    background: var(--gradient-primary);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    font-size: 1.25rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-primary);
-    transition: all 0.3s ease;
-    animation: pulse-slow 4s ease-in-out infinite;
-}
-
-.audio-btn:hover {
-    transform: scale(1.1);
-    box-shadow: var(--shadow-hover);
-}
-
-.audio-btn.playing {
-    animation: none;
-}
-
 /* ===== MODAL STYLES ===== */
 .modal {
     display: none;
@@ -1677,13 +1643,7 @@ body {
         left: 16px;
     }
 
-    .audio-player {
-        bottom: 16px;
-        right: 16px;
-    }
-
-    .nav-menu-btn,
-    .audio-btn {
+    .nav-menu-btn {
         width: 48px;
         height: 48px;
         font-size: 1rem;
