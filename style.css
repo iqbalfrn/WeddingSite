@@ -1594,9 +1594,30 @@ body {
         padding: 24px;
     }
 
-    .wish-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+    .nav-menu {
+        bottom: 16px;
+        left: 16px;
+    }
+
+    .audio-player {
+        bottom: 16px;
+        right: 16px;
+    }
+
+    .nav-menu-btn,
+    .audio-btn {
+        width: 48px;
+        height: 48px;
+        font-size: 1rem;
+    }
+
+    /* Hero mobile adjustments */
+    .hero-flowers {
+        display: none;
+    }
+
+    .open-invitation-btn {
+        padding: 12px 24px;
+        font-size: 0.9rem;
     }
 }
