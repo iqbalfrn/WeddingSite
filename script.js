@@ -1,22 +1,192 @@
-// ===== GLOBAL VARIABLES =====
+// Import Firebase modules
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
+import { getFirestore, collection, addDoc, getDocs, orderBy, query } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyC5Eg7G5bbW1YgzS0ujTCupfWYFwrfrVqw",
+    authDomain: "wedding-invitatation.firebaseapp.com",
+    projectId: "wedding-invitatation",
+    storageBucket: "wedding-invitatation.firebasestorage.app",
+    messagingSenderId: "934435258475",
+    appId: "1:934435258475:web:3cf137e94b942f55c4b12e",
+    measurementId: "G-8RC901YRF0"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Global variables
 let wishesData = [];
+let isSubmitting = false;
+let backgroundMusic = null;
+let isMusicPlaying = false;
+
+// Sample wishes data
+const sampleWishes = [
+    {
+        name: 'Keluarga Besar Solihin',
+        message: 'Selamat atas pernikahan yang penuh berkah ini. Semoga Allah SWT senantiasa memberikan keberkahan, kebahagiaan, dan kemudahan dalam menjalani kehidupan berumah tangga. Barokallahu lakuma wa baroka alaikuma.',
+        attendance: 'hadir',
+        timestamp: new Date().toISOString(),
+        isSample: true
+    },
+    {
+        name: 'Teman Kuliah',
+        message: 'Selamat ya untuk kalian berdua! Semoga pernikahan ini menjadi awal dari kebahagiaan yang tak terhingga. Semoga selalu bersama dalam suka dan duka, dalam sehat dan sakit, sampai kakek nenek nanti!',
+        attendance: 'hadir',
+        timestamp: new Date().toISOString(),
+        isSample: true
+    },
+    {
+        name: 'Keluarga Nasehat',
+        message: 'Alhamdulillah, akhirnya momen yang ditunggu-tunggu telah tiba. Semoga Allah meridhoi pernikahan kalian dan memberikan keturunan yang sholeh dan sholehah. Bahagia selalu untuk kalian!',
+        attendance: 'tidak-hadir',
+        timestamp: new Date().toISOString(),
+        isSample: true
+    }
+];
 
 // ===== INITIALIZATION =====
 document.addEventListener("DOMContentLoaded", function() {
+    // Initialize background music first
+    setupBackgroundMusic();
+    
     // Hide loading screen after delay
     setTimeout(() => {
         document.getElementById('loadingScreen').classList.add('hidden');
+        // Try to start music after loading screen is hidden
+        setTimeout(startBackgroundMusic, 500);
     }, 2500);
     
-    // Initialize all functionalities
+    // Initialize other functionalities
     setupCountdown();
     setupScrollAnimations();
-    setupAudioPlayer();
     setupNavigationMenu();
     setupWishForm();
+    setupMusicControl();
     loadSampleWishes();
-    loadWishes();
+    loadWishesFromFirebase();
 });
+
+// ===== BACKGROUND MUSIC =====
+function setupBackgroundMusic() {
+    backgroundMusic = document.getElementById('backgroundMusic');
+    if (!backgroundMusic) return;
+
+    // Set volume to comfortable level
+    backgroundMusic.volume = 0.3;
+    
+    // Preload the audio
+    backgroundMusic.load();
+    
+    // Handle audio events
+    backgroundMusic.addEventListener('loadeddata', () => {
+        console.log('Audio loaded successfully');
+    });
+    
+    backgroundMusic.addEventListener('error', (e) => {
+        console.log('Audio loading error:', e);
+        // Hide music control if audio fails to load
+        const musicControl = document.getElementById('musicControl');
+        if (musicControl) {
+            musicControl.style.display = 'none';
+        }
+    });
+    
+    backgroundMusic.addEventListener('ended', () => {
+        // Loop the music
+        backgroundMusic.currentTime = 0;
+        if (isMusicPlaying) {
+            backgroundMusic.play().catch(e => console.log('Loop play failed:', e));
+        }
+    });
+}
+
+function startBackgroundMusic() {
+    if (!backgroundMusic) return;
+    
+    // Try to auto-play music
+    const playPromise = backgroundMusic.play();
+    
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            console.log('Background music started automatically');
+            isMusicPlaying = true;
+            updateMusicControl();
+        }).catch(error => {
+            console.log('Auto-play prevented by browser:', error);
+            // Music will be started on first user interaction
+            isMusicPlaying = false;
+            updateMusicControl();
+        });
+    }
+}
+
+function setupMusicControl() {
+    const musicBtn = document.getElementById('musicBtn');
+    const musicControl = document.getElementById('musicControl');
+    
+    if (!musicBtn || !musicControl) return;
+    
+    // Add click event to music button
+    musicBtn.addEventListener('click', toggleMusic);
+    
+    // Try to start music on any user interaction
+    document.addEventListener('click', startMusicOnInteraction, { once: true });
+    document.addEventListener('touchstart', startMusicOnInteraction, { once: true });
+    document.addEventListener('keydown', startMusicOnInteraction, { once: true });
+}
+
+function startMusicOnInteraction() {
+    if (!backgroundMusic || isMusicPlaying) return;
+    
+    backgroundMusic.play().then(() => {
+        console.log('Background music started on user interaction');
+        isMusicPlaying = true;
+        updateMusicControl();
+    }).catch(error => {
+        console.log('Failed to start music on interaction:', error);
+    });
+}
+
+function toggleMusic() {
+    if (!backgroundMusic) return;
+    
+    if (isMusicPlaying) {
+        backgroundMusic.pause();
+        isMusicPlaying = false;
+        console.log('Music paused');
+    } else {
+        backgroundMusic.play().then(() => {
+            isMusicPlaying = true;
+            console.log('Music resumed');
+        }).catch(error => {
+            console.log('Failed to resume music:', error);
+        });
+    }
+    
+    updateMusicControl();
+}
+
+function updateMusicControl() {
+    const musicBtn = document.getElementById('musicBtn');
+    const musicIcon = document.getElementById('musicIcon');
+    const musicControl = document.getElementById('musicControl');
+    
+    if (!musicBtn || !musicIcon || !musicControl) return;
+    
+    if (isMusicPlaying) {
+        musicIcon.className = 'fas fa-music';
+        musicBtn.classList.remove('paused');
+        musicControl.classList.remove('paused');
+    } else {
+        musicIcon.className = 'fas fa-music';
+        musicBtn.classList.add('paused');
+        musicControl.classList.add('paused');
+    }
+}
 
 // ===== COUNTDOWN TIMER =====
 function setupCountdown() {
@@ -86,44 +256,6 @@ function setupScrollAnimations() {
     });
 }
 
-// ===== AUDIO PLAYER =====
-function setupAudioPlayer() {
-    const music = document.getElementById('backgroundMusic');
-    const playBtn = document.getElementById('playPauseBtn');
-    
-    if (!music || !playBtn) return;
-
-    playBtn.addEventListener('click', function() {
-        if (music.paused) {
-            music.play().then(() => {
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                playBtn.classList.add('playing');
-            }).catch(error => {
-                console.log('Audio play failed:', error);
-            });
-        } else {
-            music.pause();
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            playBtn.classList.remove('playing');
-        }
-    });
-
-    music.addEventListener('ended', () => {
-        playBtn.innerHTML = '<i class="fas fa-play"></i>';
-        playBtn.classList.remove('playing');
-    });
-
-    music.addEventListener('pause', () => {
-        playBtn.innerHTML = '<i class="fas fa-play"></i>';
-        playBtn.classList.remove('playing');
-    });
-
-    music.addEventListener('play', () => {
-        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-        playBtn.classList.add('playing');
-    });
-}
-
 // ===== NAVIGATION MENU =====
 function setupNavigationMenu() {
     const menuBtn = document.getElementById('navMenuBtn');
@@ -157,48 +289,85 @@ function setupWishForm() {
     const form = document.getElementById('wishForm');
     if (!form) return;
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
+        if (isSubmitting) return;
+        
         const wishData = {
-            name: form.wishName.value,
-            message: form.wishMessage.value,
+            name: form.wishName.value.trim(),
+            message: form.wishMessage.value.trim(),
             attendance: form.wishAttendance.value,
             timestamp: new Date().toISOString()
         };
 
-        wishesData.unshift(wishData);
-        saveWishes();
-        displayWishes();
-        
+        // Validation
+        if (!wishData.name || !wishData.message || !wishData.attendance) {
+            showNotification('Mohon lengkapi semua field', 'error');
+            return;
+        }
+
+        await saveWishToFirebase(wishData);
         form.reset();
-        showNotification('Terima kasih! Ucapan Anda telah terkirim.', 'success');
     });
 }
 
-// ===== WISHES MANAGEMENT =====
-function loadSampleWishes() {
-    const sampleWishes = [
-        {
-            name: 'Keluarga Besar Solihin',
-            message: 'Selamat atas pernikahan yang penuh berkah ini. Semoga Allah SWT senantiasa memberikan keberkahan, kebahagiaan, dan kemudahan dalam menjalani kehidupan berumah tangga. Barokallahu lakuma wa baroka alaikuma.',
-            attendance: 'hadir',
-            timestamp: new Date().toISOString()
-        },
-        {
-            name: 'Teman Kuliah',
-            message: 'Selamat ya untuk kalian berdua! Semoga pernikahan ini menjadi awal dari kebahagiaan yang tak terhingga. Semoga selalu bersama dalam suka dan duka, dalam sehat dan sakit, sampai kakek nenek nanti!',
-            attendance: 'hadir',
-            timestamp: new Date().toISOString()
-        },
-        {
-            name: 'Keluarga Nasehat',
-            message: 'Alhamdulillah, akhirnya momen yang ditunggu-tunggu telah tiba. Semoga Allah meridhoi pernikahan kalian dan memberikan keturunan yang sholeh dan sholehah. Bahagia selalu untuk kalian!',
-            attendance: 'tidak-hadir',
-            timestamp: new Date().toISOString()
-        }
-    ];
+// ===== FIREBASE FUNCTIONS =====
+async function saveWishToFirebase(wishData) {
+    try {
+        isSubmitting = true;
+        updateSubmitButton(true);
+        
+        // Save to Firebase
+        const docRef = await addDoc(collection(db, 'wishes'), wishData);
+        
+        // Add to local array with Firebase ID
+        const wishWithId = {
+            id: docRef.id,
+            ...wishData
+        };
+        
+        wishesData.unshift(wishWithId);
+        displayWishes();
+        
+        showNotification('Terima kasih! Ucapan Anda telah terkirim.', 'success');
+        
+    } catch (error) {
+        console.error('Error saving wish:', error);
+        showNotification('Gagal mengirim ucapan. Silakan coba lagi.', 'error');
+    } finally {
+        isSubmitting = false;
+        updateSubmitButton(false);
+    }
+}
 
+async function loadWishesFromFirebase() {
+    try {
+        const wishesQuery = query(
+            collection(db, 'wishes'),
+            orderBy('timestamp', 'desc')
+        );
+        
+        const querySnapshot = await getDocs(wishesQuery);
+        wishesData = [];
+        
+        querySnapshot.forEach((doc) => {
+            wishesData.push({
+                id: doc.id,
+                ...doc.data()
+            });
+        });
+        
+        displayWishes();
+        
+    } catch (error) {
+        console.error('Error loading wishes:', error);
+        showNotification('Gagal memuat ucapan', 'error');
+    }
+}
+
+// ===== WISHES DISPLAY =====
+function loadSampleWishes() {
     const container = document.getElementById('wishesContainer');
     if (!container) return;
 
@@ -212,10 +381,11 @@ function displayWishes() {
     const container = document.getElementById('wishesContainer');
     if (!container) return;
 
-    // Clear user wishes (keep sample wishes)
+    // Remove existing user wishes
     const userWishes = container.querySelectorAll('.user-wish');
     userWishes.forEach(wish => wish.remove());
 
+    // Add Firebase wishes
     wishesData.forEach(wish => {
         const wishElement = createWishElement(wish, true);
         // Insert after sample wishes
@@ -247,51 +417,17 @@ function createWishElement(wish, isUserWish = false) {
     return wishElement;
 }
 
-function saveWishes() {
-    localStorage.setItem('weddingWishes', JSON.stringify(wishesData));
-}
-
-function loadWishes() {
-    const storedWishes = localStorage.getItem('weddingWishes');
-    if (storedWishes) {
-        try {
-            wishesData = JSON.parse(storedWishes);
-            displayWishes();
-        } catch (error) {
-            console.error('Error parsing stored wishes:', error);
-            wishesData = [];
-        }
-    }
-}
-
-// ===== MODAL FUNCTIONS =====
-function openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-}
-
-window.addEventListener('click', function(event) {
-    if (event.target.classList.contains('modal')) {
-        closeModal(event.target.id);
-    }
-});
-
-// ===== UTILITY FUNCTIONS =====
-function scrollToSection(sectionId) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+// ===== UI HELPERS =====
+function updateSubmitButton(loading) {
+    const submitBtn = document.getElementById('submitBtn');
+    const submitText = document.getElementById('submitText');
+    
+    if (loading) {
+        submitBtn.disabled = true;
+        submitText.textContent = 'Mengirim...';
+    } else {
+        submitBtn.disabled = false;
+        submitText.textContent = 'Kirim Ucapan';
     }
 }
 
@@ -308,7 +444,7 @@ function showNotification(message, type = 'info') {
         background: ${bgColor};
         color: white;
         border-radius: 12px;
-        box-shadow: var(--shadow-primary);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         z-index: 10000;
         transform: translateX(120%);
         transition: transform 0.3s ease-out;
@@ -339,7 +475,44 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
-// ===== SMOOTH SCROLLING FOR ANCHOR LINKS =====
+// ===== MODAL FUNCTIONS =====
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Make functions global for HTML onclick handlers
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.scrollToSection = scrollToSection;
+
+// ===== UTILITY FUNCTIONS =====
+function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// ===== EVENT LISTENERS =====
+window.addEventListener('click', function(event) {
+    if (event.target.classList.contains('modal')) {
+        closeModal(event.target.id);
+    }
+});
+
+// Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -353,48 +526,43 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ===== KEYBOARD ACCESSIBILITY =====
+// Keyboard accessibility
 document.addEventListener('keydown', function(e) {
-    // Close modal with Escape key
     if (e.key === 'Escape') {
         const openModal = document.querySelector('.modal[style*="display: block"]');
         if (openModal) {
             closeModal(openModal.id);
         }
         
-        // Close navigation menu
         const menuList = document.getElementById('navMenuList');
         if (menuList && menuList.classList.contains('active')) {
             menuList.classList.remove('active');
             document.getElementById('navMenuBtn').querySelector('i').className = 'fas fa-bars';
         }
     }
+    
+    // Space bar to toggle music
+    if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        toggleMusic();
+    }
 });
 
-// ===== PERFORMANCE OPTIMIZATION =====
-// Lazy load images
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-
-    document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
-    });
-}
-
-// Preload critical resources
-window.addEventListener('load', function() {
-    // Preload audio
-    const audio = document.getElementById('backgroundMusic');
-    if (audio) {
-        audio.load();
+// Handle page visibility change
+document.addEventListener('visibilitychange', () => {
+    if (!backgroundMusic) return;
+    
+    if (document.hidden) {
+        // Pause music when page is hidden
+        if (isMusicPlaying && !backgroundMusic.paused) {
+            backgroundMusic.pause();
+        }
+    } else {
+        // Resume music when page becomes visible
+        if (isMusicPlaying && backgroundMusic.paused) {
+            backgroundMusic.play().catch(error => {
+                console.log('Resume play failed:', error);
+            });
+        }
     }
 });
