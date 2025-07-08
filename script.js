@@ -25,27 +25,7 @@ let isMusicPlaying = false;
 
 // Sample wishes data
 const sampleWishes = [
-    {
-        name: 'Keluarga Besar Solihin',
-        message: 'Selamat atas pernikahan yang penuh berkah ini. Semoga Allah SWT senantiasa memberikan keberkahan, kebahagiaan, dan kemudahan dalam menjalani kehidupan berumah tangga. Barokallahu lakuma wa baroka alaikuma.',
-        attendance: 'hadir',
-        timestamp: new Date().toISOString(),
-        isSample: true
-    },
-    {
-        name: 'Teman Kuliah',
-        message: 'Selamat ya untuk kalian berdua! Semoga pernikahan ini menjadi awal dari kebahagiaan yang tak terhingga. Semoga selalu bersama dalam suka dan duka, dalam sehat dan sakit, sampai kakek nenek nanti!',
-        attendance: 'hadir',
-        timestamp: new Date().toISOString(),
-        isSample: true
-    },
-    {
-        name: 'Keluarga Nasehat',
-        message: 'Alhamdulillah, akhirnya momen yang ditunggu-tunggu telah tiba. Semoga Allah meridhoi pernikahan kalian dan memberikan keturunan yang sholeh dan sholehah. Bahagia selalu untuk kalian!',
-        attendance: 'tidak-hadir',
-        timestamp: new Date().toISOString(),
-        isSample: true
-    }
+
 ];
 
 // ===== INITIALIZATION =====
